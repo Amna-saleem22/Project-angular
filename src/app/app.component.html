@@ -1,62 +1,116 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-#customers {
-  font-family: Arial, Helvetica, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary" style="background-color:rgb(162, 87, 233) !important;">
+ 
+    <div class="container-fluid">
+       
+        <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+        </button>
 
-#customers td, #customers th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#customers tr:nth-child(even){background-color: #f2f2f2;}
-
-#customers tr:hover {background-color: #ddd;}
-
-#customers th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04AA6D;
-  color: white;
-}
-</style>
-</head>
-<body>
-@for (data of user; track $index) {
-
-  <h1>A Fancy Table</h1>
-
-  <table id="customers">
-    <tr>
-      <th>ID</th>
-      <th>NAME</th>
-      <th>EMAIL</th>
-      <th>ADDRESS</th>
-      
-    </tr>
-  
-    <tr>
-      <td></td>
-      <td>{{data.name}}</td>
-      <td>{{data.email}}</td>
-      <td>{{data.address.street}}</td>
-     
-    </tr>
-  
-  </table>
-  <select name="" id="" class="form-select">
-    @for (data of user; track $index) {
-      <option value="">{{data.name}}</option>
-    }
-  </select>
-}
-
-</body>
-</html>
+   
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand mt-2 mt-lg-0 text-white" >
+               <h1>your Choice</h1>
+            </a>
+          
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 20%; color: black;">
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/" routerLinkActive="active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/product" routerLinkActive="active">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/Contact" routerLinkActive="active">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/login" routerLinkActive="active">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" routerLink="/login" routerLinkActive="active">About</a>
+                </li>
+            </ul>
+            <!-- Left links -->
 
 
+
+          
+           
+         
+            
+
+
+
+
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <a class="link-secondary me-3"  (click)="showCart()">
+                <i class="fa fa-shopping-cart text-white" style="font-size: 35px;cursor: pointer;"></i>
+            </a>
+            <div [class]="isCartVisiable ? 'dropdown-menu dropdown-menu-end show':'dropdown-menu dropdown-menu-end'"
+                style="position: absolute;
+          right: 13px;top:60px;padding: 10px;" aria-labelledby="navbarDropdownMenuAvatar">
+                <div class="row">
+                    <div class="col-8">
+                        <h6>Cart Items</h6>
+                    </div>
+                    <div class="col-4 text-end">
+                        <i class="fa fa-close p-2 text-danger" (click)="showCart()"></i>
+                    </div>
+                </div>
+
+
+                <table class="table table-sm">
+                    <tbody>
+                        @if (cartItems.length ==0) {
+                        <tr>
+                            <td colspan="4">
+                                <p>No Product Added Yet</p>
+                            </td>
+                        </tr>
+                        } @else {
+                        @for (item of cartItems; track $index) {
+                        <tr>
+                            <td>
+                                <div class="rounded"
+                                    style="background-image: url({{item.imageUrl}}); width: 60px; height: 60px; background-size: cover;">
+                                </div>
+                            </td>
+                            <td class="align-middle text-left">{{item.productName}} | </td>
+                            <td class="align-middle text-right">${{getDiscountedPrice(item)}} | </td>
+                            <td class="align-middle text-center">
+                                <a (click)="removeProduct($index)" data-toggle="modal"
+                                    data-title="Delete your product ?">
+                                    <i class="fa fa-trash text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                        }
+
+
+                        @if (cartItems.length !==0) {
+                        <tr>
+                            <td colspan="3" class="align-middle text-right">Quantity</td>
+                            <td class="align-middle text-right">{{cartItems.length}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="align-middle text-right">Total</td>
+                            <td class="align-middle text-right">{{totalAmount}}</td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</nav>
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>

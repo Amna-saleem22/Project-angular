@@ -1,11 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
+import { Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { ProductService } from './pages/service/product.service';
+import { FooterComponent } from "./footer/footer.component";
+import { SliderComponent } from "./slider/slider.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, FooterComponent, SliderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -13,22 +15,41 @@ export class AppComponent {
   title = 'API';
 
 
-  user: any[] = [];
-  constructor( private http : HttpClient){
-    this.getdata();
+  productService = inject(ProductService);
+  isCartVisiable: boolean = false;
+  cartItems: any []= [];
+  totalAmount: number = 0;
+  constructor() {
+    this.productService.onAddToCart$.subscribe((res:any)=> {
+      debugger;
+      this.cartItems.unshift(res);
+      this.calculateAmount();
+    })
   }
 
-   getdata(){
-     this.http.get("https://jsonplaceholder.typicode.com/users").subscribe(
-      (data:any) => {
-        this.user = data
-      },
-      // (error) => {
-      //   console.error('Error fetching users:', error);
-      //   alert('Failed to fetch user data. Please try again later.');
-      // }
-     );
-    
-   }
+  showCart() {
+    this.isCartVisiable = !this.isCartVisiable;
+  }
+  getDiscountedPrice(product: any) {
+    const totalValue = product.price * ( (100-product.discount) / 100 )
+    return totalValue.toFixed(0);
+  }
 
+  calculateAmount() {
+    this.totalAmount = 0;
+    this.cartItems.forEach(product => {
+      this.totalAmount = this.totalAmount +  this.totalAmount  + (product.price * ( (100-product.discount) / 100 ))
+    }); 
+  }
+
+  removeProduct(index:number) {
+    this.cartItems.splice(index,1)
+    this.calculateAmount();
+  }
+
+
+
+
+
+  
 }
