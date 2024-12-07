@@ -1,14 +1,24 @@
 import { Component } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card.component';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent,RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+  // goToAbout(router: Router): void {
+  //   router.navigate(['about']);
+  // }
+
+
+  // constructor(private router: Router) {}
+
+
 
   isLoader: boolean = true;
   categoryList = ['Laptop', 'IPad', 'Moniter', 'Camera', 'Headphones','Mobile','Tablet'];
@@ -31,6 +41,7 @@ export class HomeComponent {
   filteredProducts: any []=[];
   selectedCategory: string = '';
   constructor(){
+
     setTimeout(() => {
       this.isLoader = false;
     }, 1000);

@@ -23,4 +23,5 @@ export class ProductCardComponent {
     this.productService.onAddToCart$.next(productData);
   }
 
+  
 }

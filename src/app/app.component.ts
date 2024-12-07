@@ -1,18 +1,46 @@
 
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject ,OnInit} from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { ProductService } from './pages/service/product.service';
 import { FooterComponent } from "./footer/footer.component";
-import { SliderComponent } from "./slider/slider.component";
+import { SliderComponent } from './slider/slider.component';
+// import LocomotiveScroll from 'locomotive-scroll';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent, SliderComponent],
+  imports: [RouterOutlet, FooterComponent, RouterLink,SliderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'API';
+
+
+
+// scroll:any
+//implements  OnInit
+//   ngOnInit() {
+//     const scrollContainer = document.querySelector('[data-scroll-container]');
+  
+//     if (scrollContainer) {
+//       this.scroll = new LocomotiveScroll({
+//         el: scrollContainer,
+//         smooth: true
+//       });
+//     } else {
+//       console.warn('Scroll container not found!');
+//     }
+//   }
+  
+
+
+
+
+
+
+
+
 
 
   productService = inject(ProductService);

@@ -5,6 +5,8 @@ ul {
 .footer-section {
   background: #151414;
   position: relative;
+  margin-top: 25%;
+  bottom:0% ;
 }
 .footer-cta {
   border-bottom: 1px solid #373636;
@@ -40,6 +42,9 @@ ul {
   height: 330px;
   background-size: cover;
   background-position: 100% 100%;
+}
+..footer {
+  margin-bottom: 0%;
 }
 .footer-logo {
   margin-bottom: 30px;
